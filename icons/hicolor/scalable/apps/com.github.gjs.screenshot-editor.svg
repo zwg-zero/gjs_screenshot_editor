@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Background rounded rectangle -->
+  <rect x="4" y="4" width="120" height="120" rx="20" ry="20" fill="#3584e4"/>
+  <rect x="4" y="4" width="120" height="120" rx="20" ry="20" fill="url(#grad)"/>
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#62a0ea" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#1a5fb4" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Camera body -->
+  <rect x="22" y="42" width="84" height="56" rx="8" ry="8" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Camera top bump (viewfinder) -->
+  <rect x="46" y="32" width="36" height="16" rx="4" ry="4" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Camera lens (outer) -->
+  <circle cx="64" cy="68" r="20" fill="none" stroke="#2e3436" stroke-width="3" opacity="0.7"/>
+  <!-- Camera lens (inner) -->
+  <circle cx="64" cy="68" r="12" fill="#3584e4" opacity="0.8"/>
+  <!-- Camera lens highlight -->
+  <circle cx="58" cy="62" r="4" fill="#ffffff" opacity="0.5"/>
+
+  <!-- Flash dot -->
+  <circle cx="88" cy="50" r="4" fill="#f6d32d" opacity="0.9"/>
+
+  <!-- Pencil (edit tool) - bottom right -->
+  <g transform="translate(82, 72) rotate(45)">
+    <rect x="0" y="0" width="8" height="36" rx="1" ry="1" fill="#e01b24"/>
+    <rect x="0" y="0" width="8" height="6" rx="1" ry="1" fill="#a51d2d"/>
+    <polygon points="0,36 4,44 8,36" fill="#f5c211"/>
+    <polygon points="3,42 4,44 5,42" fill="#2e3436"/>
+  </g>
+</svg>

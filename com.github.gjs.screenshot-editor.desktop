@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Screenshot Editor
+Comment=Capture and annotate screenshots
+Exec=gjs -m /home/laofa/programs/gjs_screenshot_editor/screenshot-editor.js
+Icon=com.github.gjs.screenshot-editor
+Terminal=false
+Type=Application
+Categories=Graphics;Utility;
+Keywords=screenshot;capture;annotate;edit;
