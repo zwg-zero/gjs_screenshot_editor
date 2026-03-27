@@ -51,13 +51,35 @@ gjs -m screenshot-editor.js
 
 ## Desktop Integration
 
-To add the app to your application launcher, install the `.desktop` file:
+### Register the application icon
+
+Install the icon and `.desktop` file for your user (no `sudo` required):
 
 ```bash
-# Edit the Exec path in the file first if needed, then:
+# Icon
+mkdir -p ~/.local/share/icons/hicolor/scalable/apps
+cp icons/hicolor/scalable/apps/com.github.gjs.screenshot-editor.svg \
+  ~/.local/share/icons/hicolor/scalable/apps/
+gtk-update-icon-cache ~/.local/share/icons/hicolor
+
+# Desktop entry
+mkdir -p ~/.local/share/applications
 cp com.github.gjs.screenshot-editor.desktop ~/.local/share/applications/
 update-desktop-database ~/.local/share/applications/
 ```
+
+Or system-wide (requires `sudo`):
+
+```bash
+sudo cp icons/hicolor/scalable/apps/com.github.gjs.screenshot-editor.svg \
+  /usr/share/icons/hicolor/scalable/apps/
+sudo gtk-update-icon-cache /usr/share/icons/hicolor
+
+sudo cp com.github.gjs.screenshot-editor.desktop /usr/share/applications/
+sudo update-desktop-database /usr/share/applications/
+```
+
+After running these commands the app and its icon will appear in the application launcher (e.g. GNOME Activities).
 
 To replace the default Ubuntu screenshot shortcut (`PrintScreen`), open **Settings → Keyboard → Keyboard Shortcuts → Screenshots** and point the shortcut to this app's launch command.
 
