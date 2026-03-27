@@ -700,7 +700,7 @@ app.connect('activate', () => {
         { name: 'Draw', icon: 'edit-symbolic', tool: Tool.DRAW },
         { name: 'Text', icon: 'font-x-generic-symbolic', tool: Tool.TEXT },
         { name: 'Rectangle', icon: 'checkbox-symbolic', tool: Tool.RECTANGLE },
-        { name: 'Arrow', icon: 'document-send-symbolic', tool: Tool.ARROW },
+        { name: 'Arrow', icon: null, tool: Tool.ARROW },
         { name: 'Highlight', icon: null, tool: Tool.HIGHLIGHT },
         { name: 'Move', icon: 'hand-open-symbolic', tool: Tool.MOVE },
         { name: 'Pan', icon: null, tool: Tool.PAN },
@@ -758,6 +758,35 @@ app.connect('activate', () => {
                 cr.stroke();
             });
             btn.set_child(panIcon);
+        } else if (t.tool === Tool.ARROW) {
+            const arrowIcon = new Gtk.DrawingArea({
+                content_width: 16,
+                content_height: 16,
+            });
+            arrowIcon.set_draw_func((area, cr, w, h) => {
+                cr.setSourceRGBA(0.2, 0.2, 0.2, 0.95);
+                cr.setLineWidth(1.2);
+                cr.setLineCap(Cairo.LineCap.ROUND);
+                cr.setLineJoin(Cairo.LineJoin.ROUND);
+                // Shaft: bottom-left to upper-right
+                const x1 = w * 0.36, y1 = h * 0.68;
+                const x2 = w * 0.68, y2 = h * 0.36;
+                cr.moveTo(x1, y1);
+                cr.lineTo(x2, y2);
+                cr.stroke();
+                // Arrowhead at (x2, y2)
+                const angle = Math.atan2(y2 - y1, x2 - x1);
+                const headLen = Math.min(w, h) * 0.22;
+                const headAngle = Math.PI / 6;
+                cr.moveTo(x2, y2);
+                cr.lineTo(x2 - headLen * Math.cos(angle - headAngle),
+                          y2 - headLen * Math.sin(angle - headAngle));
+                cr.moveTo(x2, y2);
+                cr.lineTo(x2 - headLen * Math.cos(angle + headAngle),
+                          y2 - headLen * Math.sin(angle + headAngle));
+                cr.stroke();
+            });
+            btn.set_child(arrowIcon);
         } else if (t.tool === Tool.HIGHLIGHT) {
             const highlightIcon = new Gtk.DrawingArea({
                 content_width: 16,
@@ -1183,6 +1212,14 @@ app.connect('activate', () => {
     const keyController = new Gtk.EventControllerKey();
     keyController.connect('key-pressed', (controller, keyval, keycode, state) => {
         const ctrl = (state & Gdk.ModifierType.CONTROL_MASK) !== 0;
+        if (keyval === Gdk.KEY_Delete || keyval === Gdk.KEY_BackSpace) {
+            if (selectedAnnotation !== null && selectedAnnotation >= 0 && selectedAnnotation < annotations.length) {
+                annotations.splice(selectedAnnotation, 1);
+                selectedAnnotation = null;
+                canvas.queue_draw();
+                return true;
+            }
+        }
         if (ctrl && keyval === Gdk.KEY_z) {
             if (annotations.length > 0) {
                 annotations.pop();
